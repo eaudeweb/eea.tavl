@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% load utils %}
+
+
+{% block content %}
+
+  <h1>Management</h1>
+  <h2 style="padding-left: 0;">Countries</h2>
+  <table class="management" cellpadding="0" cellspacing="1">
+
+    <thead>
+
+      <tr>
+        <th style="text-align: left;">Country</th>
+        <th style="width: 120px;">Nr of users</th>
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      {% for country in countries %}
+        {% assign country|users_for_country as users %}
+        <tr>
+          <td>
+            <a href="{% url management:country country.pk %}">
+              {{ country }}</a>
+          </td>
+          <td style="text-align: center;">
+            {{ users.count }}</td>
+        </tr>
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+
+  <h2 style="padding-left: 0;">Users</h2>
+  <table class="management" cellpadding="0" cellspacing="1">
+
+    <thead>
+
+      <tr>
+        <th style="text-align: left;">Name</th>
+        <th>Country</th>
+        <th>Email</th>
+        <th>Nr of Answers</th>
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      {% for user in users %}
+        <tr>
+          <td>{{ user }}</td>
+          <td style="text-align: center;">{{ user.country }}</td>
+          <td style="text-align: center;">{{ user.email }}</td>
+          <td style="text-align: center; width: 120px;">
+            {{ user.dcount }}</td>
+        </tr>
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+
+
+{% endblock %}

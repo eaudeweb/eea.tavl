@@ -118,9 +118,9 @@ class Survey(models.Model):
 
     category = models.ForeignKey(Category)
 
-    country = models.ForeignKey('countries.Country')
+    country = models.ForeignKey('countries.Country', related_name='surveys')
 
-    user = models.ForeignKey('tach.User')
+    user = models.ForeignKey('tach.User', related_name='surveys')
 
     date = models.DateTimeField(auto_now=True)
 

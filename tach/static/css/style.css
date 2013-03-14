@@ -28,6 +28,25 @@ ul.notes li {
   line-height: 1.5;
 }
 
+table.management {
+  background: #eaeaea;
+  width: 100%;
+}
+
+table.management th {
+  background-color: #f4f5ed;
+  padding: 7px;
+}
+
+table.management td {
+  background: #fff;
+  padding: 5px;
+}
+
+table.management tr:hover td {
+  background: #e4f1bc;
+}
+
 table.account-table {
   font-size: 0.9em;
   border-collapse: collapse;

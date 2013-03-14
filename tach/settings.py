@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     'django_assets',
     'django_hstore',
     'countries',
+    'management',
     'tach',
     'sugar',
     'survey',

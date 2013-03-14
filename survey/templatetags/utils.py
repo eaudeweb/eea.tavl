@@ -1,8 +1,10 @@
 import string
 from django import template
 from django.utils.safestring import mark_safe
+from django.db.models import Count
 from sugar import markup
 from tach.frame import get_current_request
+from tach.models import User
 
 
 register = template.Library()
@@ -44,3 +46,7 @@ def pretty_hstore(value):
 @register.filter
 def getattribute(value, name):
     return getattr(value, name, None)
+
+@register.filter
+def users_for_country(country):
+    return User.objects.annotate(count=Count('surveys')).filter(country=country)
