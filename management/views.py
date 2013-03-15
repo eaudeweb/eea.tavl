@@ -1,8 +1,13 @@
+import tempfile
 from collections import defaultdict
+from path import path
+import xlwt
 
 from django.views.generic import View
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
+from django.utils.text import capfirst
+from django.http import StreamingHttpResponse
 
 from survey.models import Survey, Category
 from countries.models import Country
@@ -12,7 +17,6 @@ from tach.models import User
 class Management(View):
 
     def get(self, request):
-
         countries = Country.objects.annotate(dcount=Count('surveys')) \
                                    .filter(dcount__gt=0) \
                                    .order_by('name')
@@ -49,3 +53,51 @@ class AnswersByCountry(View):
             'surveys': surveys,
             'view_answer': True,
         })
+
+
+class Download(View):
+
+
+    def read_file(self, f):
+        while True:
+            data = f.read(131072)
+            if data:
+                yield data
+            else:
+                break
+        f.close()
+
+
+    def get(self, request):
+        from django.http import HttpResponse
+        surveys = Survey.objects.all()
+        temp = path(tempfile.mkdtemp())
+        filename = temp / 'survey.xls'
+
+        wb = xlwt.Workbook()
+        ws = wb.add_sheet('Survey')
+
+        # adding columns
+        columns = Survey.get_fields_for_serialization()
+        for i, field in enumerate(columns):
+            ws.write(0, i, capfirst(field.verbose_name))
+        # adding rows
+        for i, survey in enumerate(surveys):
+            for j, field in enumerate(columns):
+                ws.write(i+1, j, survey.serialize_field(field))
+
+        wb.save(filename)
+
+        # keep the file open until the download is finished
+        # temp folder will be deleted after
+        try:
+            file_path = open(filename)
+        finally:
+            temp.rmtree()
+
+        response = StreamingHttpResponse(self.read_file(file_path),
+                                         content_type='application/xls')
+        response['Content-Disposition'] = 'attachment; filename="survey.xls"'
+        return response
+
+

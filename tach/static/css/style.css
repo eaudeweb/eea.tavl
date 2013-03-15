@@ -252,3 +252,8 @@ div.view-answer ul.entry li span.key{
 .loading {
   display: none;
 }
+
+.download {
+  margin-top: 10px;
+  font-size: 12px;
+}

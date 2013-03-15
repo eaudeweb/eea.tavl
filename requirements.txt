@@ -6,3 +6,5 @@ raven==2.0.12.2
 webassets==0.7.1
 requests==1.1.0
 wsgiref==0.1.2
+xlwt==0.7.4
+path.py==3.0.1

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import capfirst
 from django_hstore import hstore
 
 
@@ -78,6 +79,9 @@ class Survey(models.Model):
 
     class Meta:
         db_table = 'survey'
+        ordering = ['country', 'category']
+
+    EXCLUDE_SERIALIZATION_FIELDS = ('id',)
 
     STATUS_CHOICES = (
         ('approved', 'Approved'),
@@ -189,7 +193,7 @@ class Survey(models.Model):
                             blank=True)
 
     revision_of_design = models.CharField(max_length=50, choices=STATUS_CHOICES, null=True,
-                            blank=True)
+                            blank=True, verbose_name='Revision of design')
 
     climate_proof = models.CharField(max_length=50, choices=STATUS_CHOICES, null=True,
                             blank=True)
@@ -237,3 +241,23 @@ class Survey(models.Model):
     d2_comments = models.TextField(null=True, blank=True)
 
     objects = hstore.HStoreManager()
+
+
+    @classmethod
+    def get_fields_for_serialization(cls):
+        fields = filter(lambda f: f.name not in cls.EXCLUDE_SERIALIZATION_FIELDS,
+                        cls._meta.fields)
+        return fields
+
+    def serialize_field(self, field):
+
+        def pretty_string(val):
+            return capfirst(val.replace('_', ' '))
+
+        value = getattr(self, field.name, None) or ''
+        if isinstance(value, basestring):
+            return value
+        if isinstance(value, dict):
+            return ', '.join([capfirst(k.replace('_', ' '))
+                              for k, v in value.items() if v])
+        return unicode(value)
