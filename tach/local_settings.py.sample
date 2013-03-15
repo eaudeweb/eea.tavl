@@ -3,6 +3,13 @@ STATIC_URL = "/questionnaire-transport-adaptation/static/"
 STATIC_ROOT = "/path/to/eea.tavl/tach/static/"
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/django_cache_eea.tavl',
+    }
+}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django_hstore.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.

@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.template.base import TemplateDoesNotExist
 from django.template.loader import BaseLoader
+from django.core.cache import cache
 
 import requests
 from threading import local
@@ -20,6 +21,11 @@ def get_forwarded_cookies(request):
             forwarded_cookies[name] = request.COOKIES[name]
     return forwarded_cookies
 
+def get_frame_call_key(cookies):
+    """ """
+    cookie_key = cookies.items()
+    cookie_key.sort()
+    return repr(cookie_key)
 
 class RequestMiddleware(object):
     """
@@ -37,11 +43,17 @@ class UserMiddleware(object):
 
         if getattr(settings, 'FRAME_URL', None):
             forwarded_cookies = get_forwarded_cookies(request)
-            resp = requests.get(settings.FRAME_URL, cookies=forwarded_cookies)
+            cache_key = get_frame_call_key(forwarded_cookies)
+            json = cache.get(cache_key)
+            if not json:
+                resp = requests.get(settings.FRAME_URL,
+                                    cookies=forwarded_cookies)
+                if (resp.status_code == 200 and resp.json()):
+                    json = resp.json()
+                    new_cookies = get_forwarded_cookies(request)
+                    cache.set(get_frame_call_key(new_cookies), json, 300)
 
-            if (resp.status_code == 200 and resp.json()):
-                json = resp.json()
-
+            if json:
                 if settings.DEBUG:
                     user_id = settings.DEFAULT_USER_ID
                     defaults = settings.DEFAULT_USER

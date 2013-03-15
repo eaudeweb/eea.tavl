@@ -187,6 +187,12 @@ LOGGING = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+
 FRAME_URL = 'http://projects.eionet.europa.eu/questionnaire-transport-adaptation/templates/frame'
 
 FRAME_COOKIES = ['__ac', '_ZopeId']
