@@ -10,7 +10,7 @@
   <div class="options" style="display: none;">
     {% if survey and account == survey.user %}
     <span class="edit-answer"
-          data-href="{% url survey:edit category.id survey.id %}"
+          data-href="{% url 'survey:edit' category.id survey.id %}"
           data-opentext="[ edit ]"
           data-closetext="[ close ]">
           [ edit ]</span>
@@ -28,7 +28,7 @@
     </div>
 
     <div class="response">
-      <a data-href="{% url survey:view category.id survey.id %}"
+      <a data-href="{% url 'survey:view' category.id survey.id %}"
                class="preview">{{ survey.title }}</a>
     </div>
 

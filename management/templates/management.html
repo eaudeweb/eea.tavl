@@ -45,7 +45,7 @@
         {% assign country|users_for_country as users %}
         <tr>
           <td>
-            <a href="{% url management:country country.pk %}">
+            <a href="{% url 'management:country' country.pk %}">
               {{ country }}</a>
           </td>
           <td style="text-align: center;">

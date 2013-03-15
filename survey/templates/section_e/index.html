@@ -20,7 +20,7 @@
   {% endfor %}
   </div>
   {% if not user_answers %}
-    <a data-href="{% url survey:edit category_e_comment.id %}"
+    <a data-href="{% url 'survey:edit' category_e_comment.id %}"
        class="add" data-target="#section-e-user-answers-{{ category.id }}"
        data-closetext="[Close]"
        data-opentext="[ Add ]">[ Add ]</a>
@@ -58,7 +58,7 @@
     {% endfor %}
   </div>
 
-  <a data-href="{% url survey:edit category_e.id %}"
+  <a data-href="{% url 'survey:edit' category_e.id %}"
      class="add" data-target="#section-e-answers-{{ category.id }}" data-multiple="true"
      data-closetext="[Close]"
      data-opentext="[ Add ]">[ Add ]</a>

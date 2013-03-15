@@ -1,7 +1,7 @@
 {% if survey %}
-  {% url survey:edit category.id survey.id as url %}
+  {% url 'survey:edit' category.id survey.id as url %}
 {% else %}
-  {% url survey:edit category.id as url %}
+  {% url 'survey:edit' category.id as url %}
 {% endif %}
 
 

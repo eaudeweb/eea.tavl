@@ -4,7 +4,7 @@
   <div class="options">
     {% if survey and account == survey.user %}
     <span class="edit-answer"
-          data-href="{% url survey:edit category.id survey.id %}"
+          data-href="{% url 'survey:edit' category.id survey.id %}"
           data-opentext="[ edit ]"
           data-closetext="[ close ]">
           [ edit ]</span>
