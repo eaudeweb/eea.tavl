@@ -2,6 +2,27 @@
 {% load utils %}
 
 
+{% block head %}
+
+  {{ block.super }}
+
+  <style type="text/css">
+    .easybars {
+      border: 1px solid #bae0ba!important;
+    }
+  </style>
+
+  <script>
+    $(function () {
+      $('.coverage').each(function () {
+        $(this).easyBars();
+      });
+    });
+  </script>
+
+{% endblock %}
+
+
 {% block content %}
 
   <h1>Management</h1>
@@ -30,7 +51,12 @@
           <td style="text-align: center;">
             {{ users.count }}</td>
           <td style="text-align: center;">
-            {{ coverage|keyvalue:country.pk }}%</td>
+            <div class="coverage" data-height="15" data-width="110"
+                 data-background-color="#eee" data-bar-color="#bae0ba"
+                 data-label="{{ coverage|keyvalue:country.pk }}%"
+                 data-current="{{ coverage|keyvalue:country.pk }}"
+                 data-total="{{ coverage.total }}"></div>
+          </td>
         </tr>
       {% endfor %}
 

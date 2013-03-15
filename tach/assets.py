@@ -3,6 +3,7 @@ from django_assets import Bundle, register
 
 JS_ASSETS = (
     'js/main.js',
+    'js/jquery.easybars.js',
 )
 
 

@@ -34,15 +34,18 @@ class Management(View):
         map_categs = defaultdict(list)
         for categ in categs:
             map_categs[categ['surveys__country']].append(categ['id'])
-        return {k:float((len(v)*100)/total) for k, v in map_categs.items()}
+        coverage = {k:float((len(v)*100)/total) for k, v in map_categs.items()}
+        coverage['total'] = total
+        return coverage
 
 
 class AnswersByCountry(View):
 
     def get(self, request, country_iso):
         country = get_object_or_404(Country, pk=country_iso)
-        surveys = Survey.objects.filter(country=country)
+        surveys = Survey.objects.filter(country=country).order_by('category')
         return render(request, 'answers_by_country.html', {
             'country': country,
             'surveys': surveys,
+            'view_answer': True,
         })

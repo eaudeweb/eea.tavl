@@ -1,6 +1,6 @@
 {% load utils %}
 
-<div class="view-answer" style="display: none;">
+<div class="view-answer" {% if not view_answer %}style="display: none;"{% endif %}>
   <ul class="entry">
     {% for field in form %}
       {% if field %}

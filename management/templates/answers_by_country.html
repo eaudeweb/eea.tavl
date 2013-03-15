@@ -6,14 +6,23 @@
 
   <h1>Answers for {{ country }}</h1>
 
-  {% for survey in surveys %}
+  {% regroup surveys by category as surveys_by_category %}
 
-    {% assign survey.category as category %}
-    {% survey)x%}
+  {% for survey_category in surveys_by_category %}
+
+    {% assign survey_category.grouper as category %}
+    {% get_survey_form category as form %}
 
     <h2>{{ category }}</h2>
     <p>{{ category.description }}</p>
-    {% include "view.html" %}
+
+    {% for survey in survey_category.list %}
+      {% include "view.html" %}
+    {% endfor %}
+
   {% endfor %}
+
+
+
 
 {% endblock %}

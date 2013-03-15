@@ -5,16 +5,16 @@
 
 {% block head %}
 
-{{ block.super }}
+  {{ block.super }}
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-{% assets "css" %}
-  <link rel="stylesheet" href="{% static ASSET_URL %}" />
-{% endassets %}
+  {% assets "css" %}
+    <link rel="stylesheet" href="{% static ASSET_URL %}" />
+  {% endassets %}
 
-{% assets "js" %}
-  <script type="text/javascript" src="{% static ASSET_URL %}"></script>
-{% endassets %}
+  {% assets "js" %}
+    <script type="text/javascript" src="{% static ASSET_URL %}"></script>
+  {% endassets %}
 
 {% endblock %}

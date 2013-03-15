@@ -56,3 +56,10 @@ def keyvalue(value, key):
 @register.filter
 def users_for_country(country):
     return User.objects.annotate(count=Count('surveys')).filter(country=country)
+
+
+@register.assignment_tag
+def get_survey_form(category):
+    return category.get_widget()()
+
+
