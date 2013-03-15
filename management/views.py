@@ -1,8 +1,10 @@
+from collections import defaultdict
+
 from django.views.generic import View
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
 
-from survey.models import Survey
+from survey.models import Survey, Category
 from countries.models import Country
 from tach.models import User
 
@@ -16,10 +18,23 @@ class Management(View):
                                    .order_by('name')
         users = User.objects.annotate(dcount=Count('surveys')) \
                             .order_by('last_name', 'country')
+        coverage = self.get_coverage_data()
+
         return render(request, 'management.html', {
             'countries': countries,
+            'coverage': coverage,
             'users': users,
         })
+
+    def get_coverage_data(self):
+        total = Category.objects.count()
+        categs = Category.objects.values('id', 'surveys__country') \
+            .annotate(dcount=Count('surveys')).filter(dcount__gt=0)
+
+        map_categs = defaultdict(list)
+        for categ in categs:
+            map_categs[categ['surveys__country']].append(categ['id'])
+        return {k:float((len(v)*100)/total) for k, v in map_categs.items()}
 
 
 class AnswersByCountry(View):

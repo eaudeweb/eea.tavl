@@ -47,6 +47,12 @@ def pretty_hstore(value):
 def getattribute(value, name):
     return getattr(value, name, None)
 
+
+@register.filter
+def keyvalue(value, key):
+    return value[key]
+
+
 @register.filter
 def users_for_country(country):
     return User.objects.annotate(count=Count('surveys')).filter(country=country)

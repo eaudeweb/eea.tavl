@@ -116,7 +116,7 @@ class Survey(models.Model):
         ('don\'t know', 'don\'t know'),
     )
 
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category, related_name='surveys')
 
     country = models.ForeignKey('countries.Country', related_name='surveys')
 

@@ -13,6 +13,7 @@
       <tr>
         <th style="text-align: left;">Country</th>
         <th style="width: 120px;">Nr of users</th>
+        <th style="width: 120px;">Coverage</th>
       </tr>
 
     </thead>
@@ -28,6 +29,8 @@
           </td>
           <td style="text-align: center;">
             {{ users.count }}</td>
+          <td style="text-align: center;">
+            {{ coverage|keyvalue:country.pk }}%</td>
         </tr>
       {% endfor %}
 
