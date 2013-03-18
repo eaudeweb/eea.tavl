@@ -4,7 +4,7 @@ import string
 from functools import wraps
 from django.shortcuts import render, redirect
 
-from tach.settings import HOSTNAME
+from tach.settings import HOSTNAME, ADMIN_ROLES
 
 
 def auth_required(func):
@@ -27,6 +27,17 @@ def auth_details_required(func):
         request = args[0]
         if not request.account.country:
             return redirect('overview')
+        return func(*args, **kwargs)
+    return wrapper
+
+
+def auth_admin_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        request = args[0]
+        for r in request.account.roles:
+            if r not in ADMIN_ROLES:
+                return render(request, 'restricted.html')
         return func(*args, **kwargs)
     return wrapper
 

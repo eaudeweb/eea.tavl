@@ -53,9 +53,11 @@ class UserMiddleware(object):
             if json:
                 if settings.DEBUG:
                     user_id = settings.DEFAULT_USER_ID
+                    user_roles = settings.DEFAULT_USER_ROLES
                     defaults = settings.DEFAULT_USER
                 else:
                     user_id = json['user_id']
+                    user_roles = json.get('user_roles', [])
                     defaults = {}
 
                 if user_id and (json.get('email') or settings.DEBUG):
@@ -67,6 +69,7 @@ class UserMiddleware(object):
                     }
                     user, created = User.objects.get_or_create(user_id=user_id,
                         defaults=defaults)
+                    user.roles = user_roles
                     request.account = user
                 else:
                     if user_id:

@@ -201,6 +201,8 @@ ASSETS_DEBUG = True
 
 SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.postgresql_psycopg2'}
 
+ADMIN_ROLES = ('Manager', 'Administrator')
+
 try:
     from local_settings import *
 except ImportError:
