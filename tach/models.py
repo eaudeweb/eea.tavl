@@ -1,5 +1,6 @@
 from django.db import models
 from django import forms
+from django.template.defaultfilters import slugify
 
 
 class User(models.Model):

@@ -6,6 +6,7 @@ from django.core.cache import cache
 import requests
 from threading import local
 from tach.models import User
+from sugar.views import random_string
 
 UNAUTHORIZED_USER = object()
 
@@ -21,11 +22,6 @@ def get_forwarded_cookies(request):
             forwarded_cookies[name] = request.COOKIES[name]
     return forwarded_cookies
 
-def get_frame_call_key(cookies):
-    """ """
-    cookie_key = cookies.items()
-    cookie_key.sort()
-    return repr(cookie_key)
 
 class RequestMiddleware(object):
     """
@@ -43,15 +39,16 @@ class UserMiddleware(object):
 
         if getattr(settings, 'FRAME_URL', None):
             forwarded_cookies = get_forwarded_cookies(request)
-            cache_key = get_frame_call_key(forwarded_cookies)
-            json = cache.get(cache_key)
+            json = cache.get(request.session.get('cache_key'))
+
             if not json:
-                resp = requests.get(settings.FRAME_URL,
-                                    cookies=forwarded_cookies)
+                resp = requests.get(settings.FRAME_URL, cookies=forwarded_cookies)
                 if (resp.status_code == 200 and resp.json()):
                     json = resp.json()
                     new_cookies = get_forwarded_cookies(request)
-                    cache.set(get_frame_call_key(new_cookies), json, 300)
+                    cache_key = random_string(5)
+                    cache.set(cache_key, json, 300)
+                    request.session['cache_key'] = cache_key
 
             if json:
                 if settings.DEBUG:
