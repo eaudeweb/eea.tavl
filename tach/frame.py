@@ -39,7 +39,8 @@ class UserMiddleware(object):
 
         if getattr(settings, 'FRAME_URL', None):
             forwarded_cookies = get_forwarded_cookies(request)
-            json = cache.get(request.session.get('cache_key'))
+            # disabled
+            json = None #cache.get(request.session.get('cache_key'))
 
             if not json:
                 resp = requests.get(settings.FRAME_URL, cookies=forwarded_cookies)

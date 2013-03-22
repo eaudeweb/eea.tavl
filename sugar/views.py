@@ -12,7 +12,7 @@ def auth_required(func):
     def wrapper(*args, **kwargs):
         from tach.frame import UNAUTHORIZED_USER
         request = args[0]
-        if not request.account:
+        if not getattr(request, 'account', False):
             login_page = "/login/login_form?disable_cookie_login__=1&came_from=%s" % HOSTNAME
             return redirect(login_page)
         if request.account is UNAUTHORIZED_USER:

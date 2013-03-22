@@ -104,6 +104,7 @@ MIDDLEWARE_CLASSES = (
     'tach.frame.RequestMiddleware',
     'tach.frame.UserMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'raven.contrib.django.middleware.Sentry404CatchMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
