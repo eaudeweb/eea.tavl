@@ -42,7 +42,7 @@ class Management(View):
         for categ in categs:
             map_categs[categ['surveys__country']].append(categ['id'])
         coverage = {k:float((len(v)*100)/total) for k, v in map_categs.items()}
-        coverage['total'] = total
+        coverage['total'] = 100
         return coverage
 
 
