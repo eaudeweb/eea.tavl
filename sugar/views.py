@@ -35,9 +35,11 @@ def auth_admin_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         request = args[0]
-        for r in request.account.roles:
-            if r in ADMIN_ROLES:
-                return func(*args, **kwargs)
+        if getattr(request, 'account', False):
+            if getattr(request.account, 'roles', False):
+                for r in request.account.roles:
+                    if r in ADMIN_ROLES:
+                        return func(*args, **kwargs)
         return render(request, 'restricted.html')
     return wrapper
 
