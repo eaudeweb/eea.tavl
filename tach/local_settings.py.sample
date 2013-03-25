@@ -31,7 +31,7 @@ DEFAULT_USER = {
     'email': 'admin@example.com',
 }
 
-DEFAULT_USER_ROLES = ['Viewer']
+DEFAULT_USER_ROLES = ['Viewer', 'Administrator']
 
 DEFAULT_USER_ID = 'edwe8tes' # ldap uid of default user
 

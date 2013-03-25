@@ -70,6 +70,7 @@ class SectionAInfo(forms.Form):
     PREVIEW_TEMPLATE = 'section_a/preview_comment.html'
 
     comment = forms.CharField(required=True, widget=forms.Textarea)
+    comment_field_alias = 'section_a_info'
 
     def save(self, user, country, category, survey):
         survey = survey or Survey(
@@ -83,6 +84,8 @@ class SectionAInfo(forms.Form):
 
 
 class SectionAComment(SectionAInfo):
+
+    comment_field_alias = 'section_a_comment'
 
     def save(self, user, country, category, survey):
         survey = survey or Survey(
@@ -102,6 +105,7 @@ class SectionBInfo(forms.Form):
     PREVIEW_TEMPLATE = 'section_b/preview_comment.html'
 
     comment = forms.CharField(required=True, widget=forms.Textarea)
+    comment_field_alias = 'section_b_info'
 
     def save(self, user, country, category, survey):
         survey = survey or Survey(
@@ -115,6 +119,8 @@ class SectionBInfo(forms.Form):
 
 
 class SectionBComment(SectionBInfo):
+
+    comment_field_alias = 'section_b_comment'
 
     def save(self, user, country, category, survey):
         survey = survey or Survey.objects.create(
@@ -204,6 +210,7 @@ class SectionC2(forms.Form):
     PREVIEW_TEMPLATE = 'section_c/preview_comment.html'
 
     comment = forms.CharField(required=True, widget=forms.Textarea)
+    comment_field_alias = 'section_c2'
 
     def save(self, user, country, category, survey):
         survey = survey or Survey(
@@ -217,6 +224,8 @@ class SectionC2(forms.Form):
 
 
 class SectionCComment(SectionC2):
+
+    comment_field_alias = 'section_c_comment'
 
     def save(self, user, country, category, survey):
         survey = survey or Survey(
@@ -366,6 +375,8 @@ class SectionDComment(SectionAInfo):
 
     PREVIEW_TEMPLATE = 'section_d/preview_comment.html'
 
+    comment_field_alias = 'section_d_comment'
+
     def save(self, user, country, category, survey):
         survey = survey or Survey(
             user=user,
@@ -434,6 +445,8 @@ class SectionE(forms.Form):
 class SectionEComment(SectionAInfo):
 
     PREVIEW_TEMPLATE = 'section_e/preview_comment.html'
+
+    comment_field_alias = 'section_e_comment'
 
     def save(self, user, country, category, survey):
         survey = survey or Survey(

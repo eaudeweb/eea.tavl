@@ -9,6 +9,10 @@
         <span class="value">
           {% if field.name == 'link' %}
             {{ survey|getattribute:field.name|urlize }}
+          {% elif field.name == 'comment' %}
+            {% with comment_field=form.comment_field_alias %}
+              {{ survey|getattribute:comment_field|pretty_hstore }}
+            {% endwith %}
           {% else %}
             {{ survey|getattribute:field.name|pretty_hstore }}
           {% endif %}
