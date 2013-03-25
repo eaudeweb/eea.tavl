@@ -31,6 +31,8 @@ def pretty_hstore(value):
     if not isinstance(value, dict):
         if value is None:
             return '-'
+        if not isinstance(value, basestring):
+            value = str(value)
         return string.capwords(value).replace('_', ' ')
     page = markup.page()
     page.ul()
