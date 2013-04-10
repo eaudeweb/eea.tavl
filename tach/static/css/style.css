@@ -257,3 +257,21 @@ div.view-answer ul.entry li span.key{
   margin-top: 10px;
   font-size: 12px;
 }
+
+.table-view {
+  font-size: 0.9em;
+  background-color: #F4F5ED;
+  border: 1px solid #F4F5ED;
+}
+
+.table-view td,
+.table-view th {
+  padding: 5px 7px;
+}
+
+.table-view td {
+  background: #fff;
+}
+.table-view tr:hover td {
+  background: #dee9ce;
+}

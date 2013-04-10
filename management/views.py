@@ -59,6 +59,16 @@ class AnswersByCountry(View):
         })
 
 
+class AnswersByQuestion(View):
+
+    @method_decorator(auth_admin_required)
+    def get(self, request):
+        surveys = Survey.objects.order_by('category', 'country')
+        return render(request, 'answers_by_question.html', {
+            'surveys': surveys,
+        })
+
+
 class Download(View):
 
 

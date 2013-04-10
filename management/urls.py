@@ -7,6 +7,8 @@ urlpatterns = patterns('',
 
     url(r'^answers/country/(?P<country_iso>[\w\-]+)/$', views.AnswersByCountry.as_view(), name='country'),
 
+    url(r'^answers/questions/$', views.AnswersByQuestion.as_view(), name='questions'),
+
     url(r'^answers/download/$', views.Download.as_view(), name='download'),
 
 )

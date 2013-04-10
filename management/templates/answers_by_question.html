@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% load utils %}
+
+
+{% block content %}
+
+  <h1>Answers for questions</h1>
+
+  {% regroup surveys by category as surveys_by_category %}
+
+  {% for survey_category in surveys_by_category %}
+    {% assign survey_category.grouper as category %}
+    {% get_survey_form category as form %}
+
+    <h2>{{ category }}</h2>
+    <p>{{ category.description }}</p>
+
+    <table class="table-view" cellpadding="0" cellspacing="1" style="width: 100%;">
+
+      <thead>
+        <tr>
+        <th>Country</th>
+        {% for field in form %}
+          <th> {{ field.label }}</th>
+        {% endfor %}
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for survey in survey_category.list %}
+        <tr>
+          <td>{{ survey.country }}</td>
+          {% for field in form %}
+          <td>
+            {% if field.name == 'link' %}
+              {{ survey|getattribute:field.name|urlize }}
+            {% elif field.name == 'comment' %}
+              {% with comment_field=form.comment_field_alias %}
+                {{ survey|getattribute:comment_field|pretty_hstore }}
+              {% endwith %}
+            {% else %}
+              {{ survey|getattribute:field.name|pretty_hstore }}
+            {% endif %}
+          </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+
+  {% endfor %}
+
+{% endblock %}
