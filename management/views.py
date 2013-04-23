@@ -13,12 +13,12 @@ from django.utils.decorators import method_decorator
 from survey.models import Survey, Category
 from countries.models import Country
 from tach.models import User
-from sugar.views import auth_admin_required
+from sugar.views import auth_required
 
 
 class Management(View):
 
-    @method_decorator(auth_admin_required)
+    @method_decorator(auth_required)
     def get(self, request):
         countries = Country.objects.annotate(dcount=Count('surveys')) \
                                    .filter(dcount__gt=0) \
@@ -48,7 +48,7 @@ class Management(View):
 
 class AnswersByCountry(View):
 
-    @method_decorator(auth_admin_required)
+    @method_decorator(auth_required)
     def get(self, request, country_iso):
         country = get_object_or_404(Country, pk=country_iso)
         surveys = Survey.objects.filter(country=country).order_by('category')
@@ -61,7 +61,7 @@ class AnswersByCountry(View):
 
 class AnswersByQuestion(View):
 
-    @method_decorator(auth_admin_required)
+    @method_decorator(auth_required)
     def get(self, request):
         surveys = Survey.objects.order_by('category', 'country')
         return render(request, 'answers_by_question.html', {
@@ -81,7 +81,7 @@ class Download(View):
                 break
         f.close()
 
-    @method_decorator(auth_admin_required)
+    @method_decorator(auth_required)
     def get(self, request):
         from django.http import HttpResponse
         surveys = Survey.objects.all()

@@ -25,10 +25,11 @@
 
 {% block content %}
 
-  <h1>Management</h1>
-
-  <a href="{% url 'management:questions' %}">Answers by questions</a>
-
+  <h1>Answers by country</h1>
+  <p>Listing all submitted answers for this survey, grouped by country.
+  Please select the country you want to display answers for.</p>
+  (<a href="{% url 'management:questions' %}">View instead answers grouped by questions?</a>)
+<br /><br />
   <h2 style="padding-left: 0;">Countries</h2>
   <table class="management" cellpadding="0" cellspacing="1">
 
@@ -73,7 +74,8 @@
     </a>
   </div>
 
-  <h2 style="padding-left: 0;">Users</h2>
+{% if "Administrator" in request.account.roles %}
+  <h1 style="padding-left: 0;">Users</h1>
   <table class="management" cellpadding="0" cellspacing="1">
 
     <thead>
@@ -102,6 +104,7 @@
     </tbody>
 
   </table>
+{% endif %}
 
 
 {% endblock %}

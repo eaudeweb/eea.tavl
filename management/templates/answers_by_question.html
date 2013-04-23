@@ -4,8 +4,10 @@
 
 {% block content %}
 
-  <h1>Answers for questions</h1>
-
+  <h1>Answers by question</h1>
+    <p>Listing all submitted answers for this survey, grouped by question.</p>
+    (<a href="{% url 'management:management' %}">View instead answers grouped by country?</a>)
+<br /><br />
   {% regroup surveys by category as surveys_by_category %}
 
   {% for survey_category in surveys_by_category %}

@@ -5,7 +5,7 @@
 {% block content %}
 
   <h1>Answers for {{ country }}</h1>
-
+  (<a href="% url 'management:management' %}">back to country list?</a>)
   {% regroup surveys by category as surveys_by_category %}
 
   {% for survey_category in surveys_by_category %}
