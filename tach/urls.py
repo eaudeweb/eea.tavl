@@ -20,5 +20,7 @@ urlpatterns = patterns('',
 
     url(r'^management/', include('management.urls', namespace='management')),
 
+    url(r'^crashme', views.crashme),
+
 
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

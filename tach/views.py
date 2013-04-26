@@ -67,3 +67,7 @@ class Survey(View):
             'category_e_comment': category_e_comment,
             'category_e': category_e,
         })
+
+def crashme():
+    raise Exception
+
